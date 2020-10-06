@@ -1,9 +1,8 @@
 package co.edu.eam.sistemasdistribuidos.queueproducer.controllers;
 
 import co.edu.eam.sistemasdistribuidos.queueproducer.model.requests.Person;
-import co.edu.eam.sistemasdistribuidos.queueproducer.producers.ProcessProducer;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import co.edu.eam.sistemasdistribuidos.queueproducer.producers.PersonsProducer;
+import co.edu.eam.sistemasdistribuidos.queueproducer.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,18 +16,11 @@ import javax.validation.Valid;
 public class PersonController {
 
   @Autowired
-  private ProcessProducer processProducer;
+  private PersonService personService;
 
   @PostMapping
-  public void create(@RequestBody @Valid Person person){
-    ObjectMapper objectMapper = new ObjectMapper();
-    try {
-      String json = objectMapper.writeValueAsString(person);
-      processProducer.produce(json);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
-
+  public void create(@RequestBody @Valid Person person) {
+      personService.createPerson(person);
   }
 
 }
