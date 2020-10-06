@@ -1,4 +1,4 @@
-package com.example.demo.configs;
+package co.edu.eam.sistemasdistribuidos.queueproducer.configurations;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -16,8 +16,8 @@ public class RabbitMQConfig {
   }
 
   @Bean
-  public Queue errorPersonsQueue(){
-    return new Queue("persons_error_queue", true);
+  public Queue storesQueue(){
+    return new Queue("stores_queue", false);
   }
 
   @Bean
@@ -30,8 +30,8 @@ public class RabbitMQConfig {
     return BindingBuilder.bind(personQueue).to(directExchange).with("person");
   }
 
-  @Bean
-  public Binding bindDirectExchangeErrorPersonsQueue(Queue errorPersonsQueue, DirectExchange directExchange){
-    return BindingBuilder.bind(errorPersonsQueue).to(directExchange).with("person_error");
+  //@Bean
+  public Binding bindDirectExchangeStoresQueue(Queue storesQueue, DirectExchange directExchange){
+    return BindingBuilder.bind(storesQueue).to(directExchange).with("stores");
   }
 }
